@@ -11,8 +11,8 @@ def test_get_lat_lon_by_time():
 
     row = log.by_time(time(13, 45, 59))
     print(row)
-    assert row.LatitudeLat == '48.575748.58'  # type: ignore
-    assert row.LongitudeLon == '-1.9022-1.90'  # type: ignore
+    assert row.lat == 48.5757  # type: ignore
+    assert row.lon == -1.9022  # type: ignore
 
 
 # https://www.google.co.uk/maps/@48.634748,-1.8852,14z
