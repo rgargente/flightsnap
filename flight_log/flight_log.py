@@ -23,13 +23,15 @@ class FlightLog:
 
     def by_time(self, time: time):
         i = self.data.time.searchsorted(time)  # type: ignore
-        # If we ever do interpolation: The value currently in i will be larger than time
+        # i is the where we would insert time to maintain order
+        # TODO Let's just take the previous one for now, we might want to take either i-1 or i, whichever is closer
+        if i > 0: i -= 1
         return self.data.iloc[i]
 
 
 def _parse(df: DataFrame):
     df['time'] = df['Time (BST)BST'].apply(_extract_time)
-
+    df['']
 
 def _extract_time(time: str):
     match = re.search(r'\d{2}:\d{2}:\d{2}', time)
