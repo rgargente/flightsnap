@@ -1,21 +1,21 @@
-from calendar import timegm
-from time import time
-import pandas as pd
-from pandas.core.frame import DataFrame
-from attr import define
-from attrs import define
-from bs4 import BeautifulSoup
-import re
 import os
+import re
 from datetime import time
 from glob import glob
+from time import time
+
+import pandas as pd
+from attrs import define
+from bs4 import BeautifulSoup
+from pandas.core.frame import DataFrame
+
 
 @define
 class FlightLog:
     data: DataFrame
 
     @classmethod
-    def from_html_file(cls, path):
+    def from_html_file(cls, path: str):
         with open(path) as f:
             table = BeautifulSoup(f, 'lxml').select('#tracklogTable', limit=1)
         df = pd.read_html(str(table))[0]
@@ -23,7 +23,7 @@ class FlightLog:
         return cls(df)
 
     @classmethod
-    def from_folder(cls, path):
+    def from_folder(cls, path: str):
         """Looks for a HTML file in the given folder and loads it"""
         # TODO Handle errors and multiple html files
         file_path = glob(os.path.join(path, '*.html'))[0]
