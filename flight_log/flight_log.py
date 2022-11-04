@@ -47,11 +47,7 @@ class FlightLog:
 
 def _parse(df: DataFrame):
     df['time'] = df['Time (BST)BST'].apply(_extract_time)
-    df['latlon'] = df.apply(
-        lambda row: LatLon(_extract_lat_lon(row.LatitudeLat),
-                           _extract_lat_lon(row.LongitudeLon)),
-        axis=1)
-
+    df['latlon'] = df.apply(_extract_lat_lon, axis=1)
 
 
 def _extract_time(time: str):
@@ -64,9 +60,11 @@ def _extract_time(time: str):
         return None
 
 
-def _extract_lat_lon(latlon: str):
-    match = re.search(r".*?\.\d{4}", latlon)
+def _extract_lat_lon(row):
+    match = re.search(r".*?\.\d{4}", row.LatitudeLat)
     if match:
-        return float(match.group())
+        lat = match.group()
+        lon = re.search(r".*?\.\d{4}", row.LongitudeLon).group()
+        return LatLon(float(lat), float(lon))
     else:
         return None
