@@ -18,3 +18,6 @@ def test_get_lat_lon_by_time():
     row = log.by_time(time(13, 45, 59))
     assert row.lat == 48.5757  # type: ignore
     assert row.lon == -1.9022  # type: ignore
+    # TODO Test extremes (first, last)
+    # TODO Test rows with no values
+
