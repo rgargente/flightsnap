@@ -6,7 +6,7 @@ from attrs import define, field
 from flight_log.flight_log import FlightLog
 from maps import maps
 from PIL import Image
-
+from typing import Tuple
 
 @define
 class FolderExtractor:
@@ -22,18 +22,18 @@ class FolderExtractor:
     def from_path(cls, path: str, time_zone_offset=0):
         return cls(path, time_zone_offset)
 
-    def map_urls(self) -> list[str]:
+    def map_urls(self) -> list[Tuple[str, str]]:
         # TODO Support other image types
         return list(map(self._map_url_from_img_path, glob(os.path.join(self.path, '*.jpg'))))
 
-    def _map_url_from_img_path(self, img_path) -> str:
+    def _map_url_from_img_path(self, img_path) ->  Tuple[str, str]:
         img_time = _extract_time(img_path)
 
         # TODO This is a horrible hack, it will fail with midnight flights. Better to use proper datetime and timedelta
         img_time = img_time.replace(hour=img_time.hour - self.time_zone_offset)
 
         row = self._log.by_time(img_time)
-        return maps.url_by_lat_lon(row.lat, row.lon)
+        return (os.path.relpath(img_path), maps.url_by_lat_lon(row.lat, row.lon))
 
 
 def _extract_time(img_path):
