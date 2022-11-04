@@ -33,7 +33,7 @@ class FolderExtractor:
         img_time = img_time.replace(hour=img_time.hour - self.time_zone_offset)
 
         row = self._log.by_time(img_time)
-        return (os.path.relpath(img_path), maps.url_by_lat_lon(row.lat, row.lon))
+        return (os.path.relpath(img_path), maps.url_by_lat_lon(row.latlon))
 
 
 def _extract_time(img_path):

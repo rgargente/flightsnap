@@ -1,5 +1,6 @@
 import os
 import re
+from dataclasses import dataclass
 from datetime import time
 from glob import glob
 from time import time
@@ -8,6 +9,12 @@ import pandas as pd
 from attrs import define
 from bs4 import BeautifulSoup
 from pandas.core.frame import DataFrame
+
+
+@dataclass
+class LatLon:
+    lat: float
+    lon: float
 
 
 @define
@@ -40,8 +47,11 @@ class FlightLog:
 
 def _parse(df: DataFrame):
     df['time'] = df['Time (BST)BST'].apply(_extract_time)
-    df['lat'] = df['LatitudeLat'].apply(_extract_lat_lon)
-    df['lon'] = df['LongitudeLon'].apply(_extract_lat_lon)
+    df['latlon'] = df.apply(
+        lambda row: LatLon(_extract_lat_lon(row.LatitudeLat),
+                           _extract_lat_lon(row.LongitudeLon)),
+        axis=1)
+
 
 
 def _extract_time(time: str):
