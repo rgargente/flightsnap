@@ -1,4 +1,4 @@
-from flight_log.flight_log import LatLon
+from flight_log import LatLon
 
 def url_by_lat_lon(latlon: LatLon):
     alt = 20000

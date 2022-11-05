@@ -1,12 +1,14 @@
 import os
-from datetime import datetime, time, timedelta
+from datetime import datetime
 from glob import glob
+from typing import Tuple
 
 from attrs import define, field
-from flight_log.flight_log import FlightLog
-from maps import maps
 from PIL import Image
-from typing import Tuple
+
+from flight_log import FlightLog
+from maps import maps
+
 
 @define
 class FolderExtractor:

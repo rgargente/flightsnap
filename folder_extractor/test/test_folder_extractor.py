@@ -1,6 +1,6 @@
 import os
 
-from folder_extractor.folder_extractor import FolderExtractor
+from .. import FolderExtractor
 
 
 def test_extract_map_urls():

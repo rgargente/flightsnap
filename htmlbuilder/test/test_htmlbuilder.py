@@ -1,4 +1,4 @@
-from htmlbuilder.htmlbuilder import build_page
+from .. import build_page
 
 def test_htmlbuilder():
     urls = [('folder_extractor/test/data/IMG_20220403_150556779.jpg',

@@ -8,7 +8,7 @@ from time import time
 import pandas as pd
 from attrs import define
 from bs4 import BeautifulSoup
-from pandas.core.frame import DataFrame
+from pandas import DataFrame
 
 
 @dataclass

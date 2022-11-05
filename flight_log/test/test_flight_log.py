@@ -1,7 +1,7 @@
 import os
-
-from flight_log.flight_log import FlightLog, LatLon
 from datetime import time
+
+from .. import FlightLog, LatLon
 
 file_name = "Flight Track Log VLG82HD 03-Apr-2022 (BIO _ LEBB-LGW _ EGKK) - FlightAware.html"
 
