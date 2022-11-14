@@ -1,9 +1,8 @@
+import datetime
 import os
 import re
 from dataclasses import dataclass
-from datetime import time
 from glob import glob
-from time import time
 
 import pandas as pd
 from attrs import define
@@ -36,7 +35,7 @@ class FlightLog:
         file_path = glob(os.path.join(path, '*.html'))[0]
         return cls.from_html_file(file_path)
 
-    def by_time(self, time: time):
+    def by_time(self, time: datetime.time):
         i = self.data.time.searchsorted(time)  # type: ignore
         # i is the index where we would insert time to maintain order
         # TODO Let's just take the previous one for now, we might want to take either i-1 or i, whichever is closer
