@@ -1,13 +1,11 @@
 import os
 from datetime import datetime
 from glob import glob
-from typing import Tuple
 
 from attrs import define, field
 from PIL import Image
 
-from flight_log import FlightLog
-from maps import maps
+from flight_log import FlightLog, LatLon
 
 
 @define
@@ -24,11 +22,11 @@ class FolderExtractor:
     def from_path(cls, path: str, time_zone_offset=0):
         return cls(path, time_zone_offset)
 
-    def map_urls(self) -> list[Tuple[str, str]]:
+    def images_latlon(self) -> list[tuple[str, LatLon]]:
         # TODO Support other image types
-        return list(map(self._map_url_from_img_path, glob(os.path.join(self.path, '*.jpg'))))
+        return list(map(self._img_latlon_from_path, glob(os.path.join(self.path, '*.jpg'))))
 
-    def _map_url_from_img_path(self, img_path) ->  Tuple[str, str]:
+    def _img_latlon_from_path(self, img_path) ->  tuple[str, LatLon]:
         img_time = _extract_time(img_path)
 
         # TODO This is a horrible hack, it will fail with midnight flights. Better to use proper datetime and timedelta
